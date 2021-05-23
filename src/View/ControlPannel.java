@@ -16,7 +16,7 @@ public class ControlPannel implements style,Components {
 	private Frame frame;
 	private JLabel modeText, speedT, speedC, openT, 
 	closedT, pathT, openC, closedC, pathC, noPathT;
-	private JCheckBox showStepsCheck, diagonalCheck;
+	private JCheckBox diagonalCheck;
 	private JSlider speed;
 	private JButton run;
 	private ButtonGroup bgMethod;
@@ -48,7 +48,6 @@ public class ControlPannel implements style,Components {
 		
 		noPathT = Components.noPathT();
 		// Set up JCheckBoxes
-		showStepsCheck =Components.showStepsCheck();
 		diagonalCheck =Components.diagonalCheck();
 		// Set up JSliders
 		speed =  Components.speed(frame);
@@ -82,7 +81,6 @@ public class ControlPannel implements style,Components {
 		labels.add(pathC);
 		labels.add(noPathT);
 		// Add JCheckboxes to list
-		checks.add(showStepsCheck);
 		checks.add(diagonalCheck);
 		// Add JSliders to list
 		sliders.add(speed);
@@ -96,20 +94,16 @@ public class ControlPannel implements style,Components {
 	}
 	public void setComponents(){
 		// Setting mode text
-		getL("modeText").setText("Mode: " + frame.getMode());
+		getL("modeText").setText(frame.getMode());
 		// Setting numbers in pathfinding lists
 		getL("openC").setText(Integer.toString(field.getOpenList().size()));
 		getL("closedC").setText(Integer.toString(field.getClosedList().size()));
 		getL("pathC").setText(Integer.toString(field.getPathList().size()));
-		// Setting speed number text in showSteps or !showSteps mode
-		if(frame.getShowSteps()) {
-			getL("speedC").setText(Integer.toString(getS("speed").getValue()));
-		}
-		else {
-			getL("speedC").setText("N/A");
-		}			
+		// Setting speed number text 
+
+		getL("speedC").setText(Integer.toString(getS("speed").getValue()));
+		
 		// Getting values from checkboxes
-		frame.setShowSteps(getC("showStepsCheck").isSelected());
 		if(field.isDiagonal()!=getC("diagonalCheck").isSelected()) {
 			field.setDiagonal(getC("diagonalCheck").isSelected());
 			controller.resetLists();
@@ -195,27 +189,26 @@ public class ControlPannel implements style,Components {
 		int yrij4 = yrij3 + 18;
 		// Set label bounds
 		Dimension sizeT = speedT.getPreferredSize();
-		speedT.setBounds(Xkolom3, yrij1, sizeT.width, 20);
-		speedC.setBounds(Xkolom3+sizeT.width,yrij1, 30, 20);
-		openT.setBounds(Xkolom4, yrij1, 60, 20);
-		openC.setBounds(Xkolom4+50, yrij1, 60, 20);
-		closedT.setBounds(Xkolom4, yrij2, 60, 20);
-		closedC.setBounds(Xkolom4+50, yrij2, 60, 20);
-		pathT.setBounds(Xkolom4, yrij3, 60, 20);
-		pathC.setBounds(Xkolom4+50, yrij3, 60, 20);
+		speedT.setBounds(Xkolom2, yrij1, sizeT.width, 20);
+		speedC.setBounds(Xkolom2+sizeT.width,yrij1, 30, 20);
+		openT.setBounds(Xkolom3, yrij1, 60, 20);
+		openC.setBounds(Xkolom3+50, yrij1, 60, 20);
+		closedT.setBounds(Xkolom3, yrij2, 60, 20);
+		closedC.setBounds(Xkolom3+50, yrij2, 60, 20);
+		pathT.setBounds(Xkolom3, yrij3, 60, 20);
+		pathC.setBounds(Xkolom3+50, yrij3, 60, 20);
 		size = modeText.getPreferredSize();
 		modeText.setBounds(Xkolom1+3, yrij4, size.width, size.height);
 		// Set check box bounds
-		showStepsCheck.setBounds(Xkolom1, yrij1, 90, 20);
-		diagonalCheck.setBounds(Xkolom1, yrij2, 90, 20);
+		diagonalCheck.setBounds(Xkolom1, yrij2+5, 90, 20);
 		// Set button bounds
-		run.setBounds(Xkolom2, yrij1, 52, 22);	
+		run.setBounds(Xkolom1+5, yrij1-5, 52, 22);	
 		// Set slider bounds
-		speed.setBounds(Xkolom3-5, yrij2+2,sizeT.width+30 , 20);
+		speed.setBounds(Xkolom2-5, yrij2+2,sizeT.width+30 , 20);
 		//set radiobuttons bounds
-		rb1.setBounds(Xkolom5,yrij1,100,14);
-		rb2.setBounds(Xkolom5,yrij2,100,14);
-		rb3.setBounds(Xkolom5,yrij3,100,14);
+		rb1.setBounds(Xkolom4,yrij1,100,14);
+		rb2.setBounds(Xkolom4,yrij2,100,14);
+		rb3.setBounds(Xkolom4,yrij3,100,14);
 	}
 	// Sets text of JLabels to lightText
 	public void hoverColour() {

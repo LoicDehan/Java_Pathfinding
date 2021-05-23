@@ -89,16 +89,7 @@ public interface Components {
 		noPathT.setFont(style.REALBIGText);
 		return noPathT;
 	}		
-	public static JCheckBox showStepsCheck() {	// Set up JCheckBoxes
-		JCheckBox showStepsCheck = new JCheckBox();
-		showStepsCheck.setText("showSteps");
-		showStepsCheck.setName("showStepsCheck");
-		showStepsCheck.setSelected(true);
-		showStepsCheck.setOpaque(false);
-		showStepsCheck.setFocusable(false);
-		showStepsCheck.setVisible(true);
-		return showStepsCheck;
-	}
+
 	public static JCheckBox diagonalCheck() {
 		JCheckBox diagonalCheck = new JCheckBox();
 		diagonalCheck.setText("Diagonal");

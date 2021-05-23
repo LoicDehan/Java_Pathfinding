@@ -31,7 +31,7 @@ public class Frame extends JPanel
 	JFrame window;
 	Field field;
 	Controller controller;
-	boolean showSteps, btnHover;
+	boolean btnHover;
 	double a1, a2;
 	char currentKey = (char) 0;
 	String mode;
@@ -40,12 +40,7 @@ public class Frame extends JPanel
 	int G = Components.randomWithRange(0, 255);;
 	int b = Components.randomWithRange(0, 255);;
 	int setStart = 0;
-	public boolean getShowSteps() {
-		return showSteps;
-	}
-	public void setShowSteps(boolean b) {
-		showSteps = b;
-	}
+
 	public String getMode() {
 		return mode;
 	}
@@ -74,7 +69,6 @@ public class Frame extends JPanel
 	
 	public void initiate() {
 		mode = "Map Creation";
-		showSteps = true;
 		btnHover = false;
 		setLayout(null);
 		addMouseListener(this);
@@ -119,12 +113,8 @@ public class Frame extends JPanel
 			timer.start();
 
 			// Set completed mode
-			if(showSteps) {
-				mode = "Found path";
-			}
-			else {
-				mode = "Found path in " + field.getRunTime() + "ms";
-			}
+			mode = "Found path";
+			
 		}
 		
 		// Draws grid
@@ -181,10 +171,16 @@ public class Frame extends JPanel
 		// If left mouse button is clicked	
 		if (SwingUtilities.isLeftMouseButton(e)) {
 			//add to wall
-			field.addNode(field.getBorderList(),NewNode);
-			if((field.getStart() != null && NewNode.equals(field.getStart())) || (field.getEnd() != null && NewNode.equals(field.getEnd())))
-				field.removeNode(field.getBorderList(), NewNode);
-			
+			int Location = field.searchNodeLoc(field.getBorderList(),mousedNodeX, mousedNodeY);
+			if (Location != -1) {
+				field.removeNodeLoc(field.getBorderList(),Location);
+			}
+			else {
+				field.addNode(field.getBorderList(),NewNode);
+				if((field.getStart() != null && NewNode.equals(field.getStart())) || (field.getEnd() != null && NewNode.equals(field.getEnd())))
+					field.removeNode(field.getBorderList(), NewNode);
+			}
+
 		} 
 		// If right mouse button is clicked
 		else if (SwingUtilities.isRightMouseButton(e)) {
@@ -271,13 +267,9 @@ public class Frame extends JPanel
 	// Starts path finding
 	void start() {
 		if(field.getStart() != null && field.getEnd() != null) {
-			if (!showSteps) {
-				/*System.out.println("Don't Show");
-				field.start(field.getStart(), field.getEnd());*/
-			} else {
-				field.setRunning(true);
-				setSpeed();
-			}
+			field.setRunning(true);
+			setSpeed();
+
 		}
 		else {
 			System.out.println("ERROR: Needs start and end points to run.");
@@ -345,7 +337,7 @@ public class Frame extends JPanel
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// Moves one step ahead in path finding (called on timer)
-		if (field.isRunning() && showSteps) {	
+		if (field.isRunning()) {	
 			if(field.getNext()==null) {
 				field.setNext(field.getStart());
 			}		
