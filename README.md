@@ -1,6 +1,6 @@
 # Java_Pathfinding
 
-Pathfind visualization in java
+Pathfinding visualization in java
 
 ## Controls
 Create a map contain a blue start node, red end node and black walls.
